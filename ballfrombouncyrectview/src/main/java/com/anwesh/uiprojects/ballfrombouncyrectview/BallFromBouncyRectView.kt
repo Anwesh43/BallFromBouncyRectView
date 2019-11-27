@@ -179,4 +179,26 @@ class BallFromBouncyRectView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BallFromBouncyRectView) {
+
+        private val animator : Animator = Animator(view)
+        private val bfbr : BallFromBouncyRect = BallFromBouncyRect(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            bfbr.draw(canvas, paint)
+            animator.animate {
+                bfbr.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bfbr.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
