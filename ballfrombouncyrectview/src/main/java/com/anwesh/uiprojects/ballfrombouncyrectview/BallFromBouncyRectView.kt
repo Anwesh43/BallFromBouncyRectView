@@ -29,13 +29,15 @@ fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 
 fun Canvas.drawBallFromBouncyRect(scale : Float, size : Float, h : Float, paint : Paint) {
+    val r : Float = size / rFactor
+    val hRect : Float = size / hFactor
     val sf : Float = scale.divideScale(0, 2).sinify()
     val sc : Float = scale.divideScale(1, 2)
     save()
     rotate(rotDeg * sf)
-    drawRect(RectF(-size, -size / hFactor, size, size / hFactor), paint)
+    drawRect(RectF(-size, -hRect, size, hRect), paint)
     restore()
-    drawCircle(0f, h * 0.5f * sc, size / rFactor, paint)
+    drawCircle(0f, (h * 0.5f + r) * sc, r, paint)
 }
 
 fun Canvas.drawBFBRNode(i : Int, scale : Float, paint : Paint) {
@@ -43,6 +45,7 @@ fun Canvas.drawBFBRNode(i : Int, scale : Float, paint : Paint) {
     val h : Float = height.toFloat()
     val gap : Float = w / (nodes + 1)
     val size : Float = gap / sizeFactor
+    paint.color = foreColor
     save()
     translate(gap * (i + 1), h / 2)
     drawBallFromBouncyRect(scale, size, h, paint)
