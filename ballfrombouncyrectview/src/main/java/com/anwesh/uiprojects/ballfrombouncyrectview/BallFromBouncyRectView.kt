@@ -203,4 +203,13 @@ class BallFromBouncyRectView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BallFromBouncyRectView {
+            val view : BallFromBouncyRectView = BallFromBouncyRectView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
